@@ -1,4 +1,13 @@
 const express = require('express');
+const { connectToDB, getDB } = require('../db');
+
+let db;
+
+connectToDB((err) => {
+    if (!err) db = getDB();
+    else console.log(err);
+})
+
 
 const router = express.Router();
 
@@ -33,3 +42,5 @@ router.post('/', (req, res) => {
     .then(result => res.status(result))
     .catch(err => res.status(500).json({'error': 'Internal Server Error', 'message': err}))
 })
+
+module.exports = router;
